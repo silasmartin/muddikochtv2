@@ -1,0 +1,7 @@
+{
+  "name": "muddikochtv2",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular-standalone"
+}
