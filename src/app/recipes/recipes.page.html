@@ -1,15 +1,26 @@
 <ion-header [translucent]="true">
-  <ion-toolbar class="toolbar">
+  <ion-toolbar>
     <ion-title>Rezepte</ion-title>
   </ion-toolbar>
-  <ion-searchbar class="sticky-searchbar"></ion-searchbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
+<ion-content id="content" [fullscreen]="true">
   <ion-header collapse="condense">
     <ion-toolbar>
       <ion-title size="large">Rezepte</ion-title>
-      <ion-searchbar></ion-searchbar>
+      <ion-buttons slot="primary">
+        <ion-button (click)="addRecipe()">
+          <ion-icon slot="icon-only" name="add-circle"></ion-icon>
+        </ion-button>
+      </ion-buttons>
     </ion-toolbar>
+    <ion-searchbar (ionChange)="search($event)" placeholder="Durchsuche deine Rezepte"
+      showCancelButton="focus"></ion-searchbar>
   </ion-header>
+
+  <div class="layout">
+    <lottie-player slot="end" autoplay loop src="../../assets/lotties/lottie-turn-book.json"></lottie-player>
+    <h4>Dein Rezeptbuch scheint noch leer zu sein. Fang gleich an und erstelle
+      dein erstes Rezept!</h4>
+  </div>
 </ion-content>

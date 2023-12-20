@@ -1,0 +1,13 @@
+<ion-item lines="none" (click)="openItem()">
+  <img class="img" [src]="recipe.picture ? meal.picture : 'assets/icons/recipe.svg'" />
+  <div class="details">
+    <h2>{{ recipe.name }}</h2>
+    <div class="iconContainer">
+      <img class="icon" src="assets/icons/alarm.svg" alt="" />
+      <p>{{ recipe.cookTimeInMinutes + recipe.prepTimeInMinutes }} Minuten</p>
+    </div>
+  </div>
+  <div class="typeIcons">
+    <img class="icon" src="assets/icons/steak.svg" />
+  </div>
+</ion-item>

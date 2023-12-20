@@ -11,9 +11,11 @@
     </ion-toolbar>
   </ion-header>
 
-  <h4>Dein Rezeptbuch scheint noch leer zu sein. Fang gleich an und erstelle
-    dein erstes Rezept!</h4>
-
-  <ion-button (click)="createRecipe()">Rezept erstellen</ion-button>
+  <div class="layout">
+    <lottie-player slot="end" autoplay loop src="../../assets/lotties/lottie-turn-book.json"></lottie-player>
+    <h4>Dein Rezeptbuch scheint noch leer zu sein. Fang gleich an und erstelle
+      dein erstes Rezept!</h4>
+    <ion-button (click)="createRecipe()">Rezept erstellen</ion-button>
+  </div>
 
 </ion-content>

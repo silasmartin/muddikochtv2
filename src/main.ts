@@ -7,6 +7,9 @@ import { routes } from './app/app.routes';
 import { AppComponent } from './app/app.component';
 import { environment } from './environments/environment';
 import { IonicStorageModule } from '@ionic/storage-angular';
+import { defineCustomElements } from '@teamhive/lottie-player/loader';
+
+defineCustomElements(window);
 
 if (environment.production) {
   enableProdMode();
