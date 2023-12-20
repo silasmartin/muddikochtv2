@@ -1,0 +1,37 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>Mehr</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">Mehr</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-list>
+    <ion-list-header>Tools</ion-list-header>
+    <ion-item [routerLink]="['./weekplan']">
+      <ion-icon slot="start" name="list"></ion-icon>Wochenplan</ion-item>
+    <ion-item [routerLink]="['./favorites']">
+      <ion-icon slot="start" name="list"></ion-icon>Favoriten</ion-item>
+  </ion-list>
+
+  <ion-list>
+    <ion-list-header>Einstellungen</ion-list-header>
+    <ion-item [routerLink]="['./user']">
+      <ion-icon slot="start" name="person-circle"></ion-icon>Benutzer</ion-item>
+    <ion-item [routerLink]="['./user']">
+      <ion-icon slot="start" name="list"></ion-icon>Kategorien</ion-item>
+  </ion-list>
+
+  <ion-list>
+    <ion-list-header>Rechtliches</ion-list-header>
+    <ion-item [routerLink]="['./imprint']">
+      <ion-icon slot="start" name="globe"></ion-icon>Impressum</ion-item>
+    <ion-item [routerLink]="['./privacy']">
+      <ion-icon slot="start" name="finger-print"></ion-icon>Datenschutz</ion-item>
+  </ion-list>
+</ion-content>
