@@ -9,3 +9,171 @@
     <ion-title>Neues Rezept</ion-title>
   </ion-toolbar>
 </ion-header>
+
+<ion-content>
+  <div class="firstRow">
+    <div class="imageCotainer">
+      <img [src]="recipe.images.length > 0 ? recipe.images[0] : 'assets/icons/add-a-photo.svg'">
+    </div>
+  </div>
+
+  <div class="nameContainer">
+    <ion-input [(ngModel)]="recipe.name" text-wrap label="Name" labelPlacement="floating"></ion-input>
+  </div>
+
+  <ion-list>
+    <ion-list-header>
+      <ion-label>Kategorien</ion-label>
+    </ion-list-header>
+
+    @for (category of recipe.mealcategories; track category.id) {
+    <ion-item color="primary">{{category.name}}</ion-item>
+    }
+
+    <ion-item color="primary" lines="none" button id="open-category-modal">
+      Kategorie hinzufügen...
+    </ion-item>
+  </ion-list>
+
+  <ion-list>
+    <ion-list-header>
+      <ion-label>Typen</ion-label>
+    </ion-list-header>
+
+    @for (type of recipe.mealtypes; track type.id) {
+    <ion-item color="primary">{{type.name}}</ion-item>
+    }
+
+    <ion-item color="primary" lines="none" button id="open-types-modal">
+      Typ hinzufügen...
+    </ion-item>
+  </ion-list>
+
+  <div class="inputRow">
+    <div class="iconInputRow">
+      <img src="assets/icons/knife.svg">
+      <ion-item color="primary" lines="none">
+        <ion-input [(ngModel)]="recipe.preptimeInMinutes" type="number" inputmode="numeric" enterkeyhint="next"
+          (keyup.enter)="cooktimeInput.setFocus()"></ion-input>
+      </ion-item>
+    </div>
+    <div class="iconInputRow">
+      <img src="assets/icons/cooking-pot.svg">
+      <ion-item color="primary" lines="none">
+        <ion-input #cooktimeInput [(ngModel)]="recipe.cooktimeInMinutes" type="number" inputmode="numeric"
+          enterkeyhint="next" (keyup.enter)="personsInput.setFocus()"></ion-input>
+      </ion-item>
+    </div>
+    <div class="iconInputRow">
+      <img src="assets/icons/people.svg">
+      <ion-item color="primary" lines="none">
+        <ion-input #personsInput [(ngModel)]="recipe.persons" type="number" inputmode="numeric" enterkeyhint="next"
+          (keyup.enter)="closeKeyboard()"></ion-input>
+      </ion-item>
+    </div>
+  </div>
+
+  <ion-list>
+    <ion-list-header>
+      <ion-label>Zutaten</ion-label>
+    </ion-list-header>
+
+    @for (ingredient of recipe.ingredients; track ingredient.id) {
+    <ion-item color="primary">{{ingredient.amount}} {{ingredient.unit}} {{ingredient.name}}
+    </ion-item>
+    }
+
+    <ion-item color="primary" lines="none" button id="open-ingredients-modal">
+      Zutat hinzufügen...
+    </ion-item>
+  </ion-list>
+
+  <ion-list>
+    <ion-list-header>
+      <ion-label>Zubereitung</ion-label>
+    </ion-list-header>
+
+    <ion-reorder-group [disabled]="false" (ionItemReorder)="stepsReorder($event)">
+      <ion-item color="primary" *ngFor="let step of recipe.prepSteps; let index = index">
+        <ion-label>{{index+1+'.'}} {{step}}</ion-label>
+        <ion-reorder slot="end"></ion-reorder>
+      </ion-item>
+    </ion-reorder-group>
+
+    <ion-item color="primary" lines="none">
+      <ion-input (keyup.enter)="addStep()" [(ngModel)]="tempInstruction" enterkeyhint="next" clearInput="true"
+        autocorrect="true" autocapitalize="sentences" inputmode="text" maxlength="200"
+        placeholder="Schritt hinzufügen..."></ion-input>
+    </ion-item>
+  </ion-list>
+
+
+  <ion-modal #categoryModal trigger="open-category-modal" [initialBreakpoint]="0.5"
+    [breakpoints]="[0, 0.25, 0.5, 0.75]">
+    <ng-template>
+      <ion-content>
+        <div class="modalSearchbar">
+          <ion-searchbar (ionInput)="filterCategories($event)" placeholder="Search"
+            (click)="categoryModal.setCurrentBreakpoint(0.75)"></ion-searchbar>
+          <ion-buttons slot="secondary">
+            <ion-button (click)="createNewMealcategory()">
+              <ion-icon slot="icon-only" name="add-circle"></ion-icon>
+            </ion-button>
+          </ion-buttons>
+        </div>
+        <ion-list>
+          <ion-item *ngFor="let category of availableMealcategoriesFiltered">
+            <ion-checkbox (ionChange)="changeMealcategories($event)" [checked]="checkMealcategory(category)"
+              [value]="category" justify="start" labelPlacement="end">{{category.name}}</ion-checkbox>
+          </ion-item>
+        </ion-list>
+      </ion-content>
+    </ng-template>
+  </ion-modal>
+
+  <ion-modal #typesModal trigger="open-types-modal" [initialBreakpoint]="0.5" [breakpoints]="[0, 0.25, 0.5, 0.75]">
+    <ng-template>
+      <ion-content>
+        <div class="modalSearchbar">
+          <ion-searchbar (ionInput)="filterTypes($event)" placeholder="Search"
+            (click)="typesModal.setCurrentBreakpoint(0.75)"></ion-searchbar>
+          <ion-buttons slot="secondary">
+            <ion-button (click)="createNewMealtype()">
+              <ion-icon slot="icon-only" name="add-circle"></ion-icon>
+            </ion-button>
+          </ion-buttons>
+        </div>
+        <ion-list>
+          <ion-item *ngFor="let type of availableMealtypesFiltered">
+            <ion-checkbox (ionChange)="changeMealtypes($event)" [checked]="checkMealtype(type)" [value]="type"
+              justify="start" labelPlacement="end">{{type.name}}</ion-checkbox>
+          </ion-item>
+        </ion-list>
+      </ion-content>
+    </ng-template>
+  </ion-modal>
+
+  <ion-modal #ingredientsModal trigger="open-ingredients-modal" [initialBreakpoint]="0.5"
+    [breakpoints]="[0, 0.25, 0.5, 0.75]">
+    <ng-template>
+      <ion-content>
+        <div class="modalSearchbar">
+          <ion-searchbar (ionInput)="filterIngredients($event)" placeholder="Search"
+            (click)="ingredientsModal.setCurrentBreakpoint(0.75)"></ion-searchbar>
+          <ion-buttons slot="secondary">
+            <ion-button (click)="createNewIngredient()">
+              <ion-icon slot="icon-only" name="add-circle"></ion-icon>
+            </ion-button>
+          </ion-buttons>
+        </div>
+        <ion-list>
+          <ion-item *ngFor="let ingredient of availableIngredientsFiltered">
+            <ion-checkbox (ionChange)="changeIngredients($event)" [checked]="checkIngredient(ingredient)"
+              [value]="ingredient" justify="start" labelPlacement="end">{{ingredient.amount}} {{ingredient.unit}}
+              {{ingredient.name}}</ion-checkbox>
+          </ion-item>
+        </ion-list>
+      </ion-content>
+    </ng-template>
+  </ion-modal>
+</ion-content>

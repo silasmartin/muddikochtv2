@@ -20,17 +20,18 @@ export class RecipesPage implements OnInit {
     addIcons({ addCircle });
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.addRecipe();
+  }
 
   async addRecipe(recipe?: Recipe) {
     console.log(recipe);
     const modal = await this.modalCtrl.create({
       component: CreateRecipePage,
-      presentingElement: await this.modalCtrl.getTop(),
       canDismiss: true,
       keyboardClose: true,
       componentProps: {
-        inputMeal: recipe
+        inputRecipe: recipe
       }
     });
     modal.present();

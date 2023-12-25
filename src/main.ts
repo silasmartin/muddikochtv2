@@ -8,6 +8,7 @@ import { AppComponent } from './app/app.component';
 import { environment } from './environments/environment';
 import { IonicStorageModule } from '@ionic/storage-angular';
 import { defineCustomElements } from '@teamhive/lottie-player/loader';
+import { HttpClientModule } from '@angular/common/http';
 
 defineCustomElements(window);
 
@@ -20,6 +21,7 @@ bootstrapApplication(AppComponent, {
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     provideIonicAngular(),
     provideRouter(routes),
-    importProvidersFrom(IonicStorageModule.forRoot())
+    importProvidersFrom(IonicStorageModule.forRoot()),
+    importProvidersFrom(HttpClientModule)
   ]
 });

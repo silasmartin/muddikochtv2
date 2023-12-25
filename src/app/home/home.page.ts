@@ -3,7 +3,10 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { StorageEnum, StorageService } from '../services/storage.service';
+import { DataService } from '../services/data.service';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 
+@UntilDestroy()
 @Component({
   selector: 'app-home',
   templateUrl: './home.page.html',
@@ -15,10 +18,17 @@ import { StorageEnum, StorageService } from '../services/storage.service';
 export class HomePage implements OnInit {
   name = '';
 
-  constructor(private storageService: StorageService) {}
+  constructor(private storageService: StorageService, private dataService: DataService) {}
 
-  async ngOnInit() {
-    this.name = await this.storageService.get(StorageEnum.USER_NAME);
+  ngOnInit() {
+    this.dataService.name.pipe(untilDestroyed(this)).subscribe({
+      next: name => {
+        this.name = name;
+      },
+      error: err => {
+        console.warn(err);
+      }
+    });
   }
 
   createRecipe() {}

@@ -16,7 +16,6 @@ export const routes: Routes = [
       },
       {
         path: 'more',
-        loadComponent: () => import('../more/more.page').then(m => m.MorePage),
         children: [
           {
             path: 'weekplan',
@@ -41,6 +40,10 @@ export const routes: Routes = [
           {
             path: 'privacy',
             loadComponent: () => import('../more/privacy/privacy.page').then(m => m.PrivacyPage)
+          },
+          {
+            path: '',
+            loadComponent: () => import('../more/more.page').then(m => m.MorePage)
           }
         ]
       },

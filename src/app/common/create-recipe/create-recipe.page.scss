@@ -1,0 +1,59 @@
+.firstRow {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  margin: 10px;
+}
+
+.imageCotainer {
+  height: 128px;
+  width: 128px;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  border-radius: 10px;
+  border-style: solid;
+  border-width: 1px;
+}
+.nameContainer {
+  background-color: var(--ion-color-primary);
+  border-radius: 10px;
+  padding: 2px;
+  margin: 1vh 3vw;
+}
+
+.modalSearchbar {
+  display: flex;
+}
+
+.inputRow {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  margin: 10px;
+}
+
+.iconInputRow {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 100px;
+
+  ion-item {
+    border-radius: 10px;
+    width: 50px;
+  }
+
+  img {
+    height: 40px;
+  }
+}
+
+ion-list {
+  border-radius: 10px;
+  margin: 1vh 3vw;
+  background-color: var(--ion-color-primary);
+}
